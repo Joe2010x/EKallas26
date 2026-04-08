@@ -215,6 +215,28 @@
       box-shadow: 0 0 0 4px rgba(185,29,115,0.1);
     }
 
+    .form-group select {
+      width: 100%;
+      padding: 13px 16px;
+      border: 2px solid #e0c8f5;
+      border-radius: 12px;
+      font-size: 1rem;
+      color: #333;
+      outline: none;
+      background: #fefefe;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b91d73' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group select:focus {
+      border-color: #b91d73;
+      box-shadow: 0 0 0 4px rgba(185,29,115,0.1);
+    }
+
     .btn-confirm {
       width: 100%;
       padding: 16px;
@@ -375,6 +397,14 @@
       </div>
 
       <div class="form-group">
+        <label for="attendance" data-i18n="label_attendance"></label>
+        <select id="attendance" name="attendance" required>
+          <option value="yes" selected data-i18n-option="option_yes"></option>
+          <option value="no"  data-i18n-option="option_no"></option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="allergy" data-i18n="label_allergy"></label>
         <input
           type="text"
@@ -478,6 +508,10 @@
       label_name:      "Your name ✏️",
       placeholder_name:"Enter your name",
       label_count:     "Number of guests (including yourself)",
+      label_attendance: "Will you attend? 🎉",
+      option_select:   "— Please choose —",
+      option_yes:      "✅ Yes, I'll be there!",
+      option_no:       "❌ Sorry, I can't make it",
       label_allergy:   "Any food allergies? 🍰",
       placeholder_allergy: "e.g. nuts, dairy, gluten — or leave blank if none",
       btn_confirm:     "🎉 I'm coming!",
@@ -487,7 +521,7 @@
       msg_error:       "Oops, something went wrong 😅 Please contact Emma's family directly!",
       footer_note:     "Please RSVP by 20 April — thank you! 💕",
       mail_subject:    "🎂 Emma's Birthday Party — RSVP",
-      mail_body:       "Name: {name}\nGuests: {count}\nAllergies: {allergy}\n\nI'm coming! 🎉"
+      mail_body:       "Name: {name}\nAttendance: {attendance}\nGuests: {count}\nAllergies: {allergy}\n\nI'm coming! 🎉"
     },
     sv: {
       page_title:      "Emmas Födelsedag 🎉",
@@ -502,6 +536,10 @@
       label_name:      "Ditt namn ✏️",
       placeholder_name:"Skriv ditt namn",
       label_count:     "Antal gäster (inklusive dig själv)",
+      label_attendance: "Kommer du? 🎉",
+      option_select:   "— Välj ett alternativ —",
+      option_yes:      "✅ Ja, jag kommer!",
+      option_no:       "❌ Tyvärr, jag kan inte komma",
       label_allergy:   "Matallergier? 🍰",
       placeholder_allergy: "T.ex. nötter, mejeriprodukter — lämna blankt om inga",
       btn_confirm:     "🎉 Jag kommer!",
@@ -511,7 +549,7 @@
       msg_error:       "Hoppsan, något gick fel 😅 Kontakta Emmas familj direkt!",
       footer_note:     "Vänligen svara senast 20 april — tack! 💕",
       mail_subject:    "🎂 Emmas Födelsedag — OSA",
-      mail_body:       "Namn: {name}\nAntal gäster: {count}\nAllergier: {allergy}\n\nJag kommer! 🎉"
+      mail_body:       "Namn: {name}\nNärvaro: {attendance}\nAntal gäster: {count}\nAllergier: {allergy}\n\nJag kommer! 🎉"
     },
     zh: {
       page_title:      "Emma 的生日派对 🎉",
@@ -526,6 +564,10 @@
       label_name:      "你的名字 ✏️",
       placeholder_name:"请填写你的名字",
       label_count:     "出席人数（包括自己）",
+      label_attendance: "你会来吗？ 🎉",
+      option_select:   "— 请选择 —",
+      option_yes:      "✅ 会，我会来！",
+      option_no:       "❌ 抱歉，我不能参加",
       label_allergy:   "有食物过敏吗？🍰",
       placeholder_allergy: "例：坚果、乳制品、麦质 — 没有的话留空即可",
       btn_confirm:     "🎉 确认出席！",
@@ -535,7 +577,7 @@
       msg_error:       "哎呀，出了点问题 😅 请直接联系 Emma 的家人！",
       footer_note:     "亲爱的朋友，请在 4 月 20 日前回复，谢谢 💕",
       mail_subject:    "🎂 Emma 的生日派对 — 出席确认",
-      mail_body:       "姓名：{name}\n出席人数：{count}\n食物过敏：{allergy}\n\n确认出席！🎉"
+      mail_body:       "姓名：{name}\n是否出席：{attendance}\n出席人数：{count}\n食物过敏：{allergy}\n\n确认出席！🎉"
     }
   };
 
@@ -557,6 +599,12 @@
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
       const key = el.getAttribute('data-i18n-placeholder');
       if (t[key] !== undefined) el.placeholder = t[key];
+    });
+
+    // Select options
+    document.querySelectorAll('[data-i18n-option]').forEach(el => {
+      const key = el.getAttribute('data-i18n-option');
+      if (t[key] !== undefined) el.textContent = t[key];
     });
 
     // Active button
@@ -587,10 +635,11 @@
     const action = form.action;
 
     if (action.includes('YOUR_FORM_ID')) {
-      const name    = document.getElementById('guestName').value;
-      const count   = document.getElementById('guestCount').value;
-      const allergy = document.getElementById('allergy').value || '—';
-      const body    = t.mail_body.replace('{name}', name).replace('{count}', count).replace('{allergy}', allergy);
+      const name       = document.getElementById('guestName').value;
+      const attendance = document.getElementById('attendance').value || '—';
+      const count      = document.getElementById('guestCount').value;
+      const allergy    = document.getElementById('allergy').value || '—';
+      const body       = t.mail_body.replace('{name}', name).replace('{attendance}', attendance).replace('{count}', count).replace('{allergy}', allergy);
       window.location.href =
         'mailto:j22se@hotmail.com?subject=' + encodeURIComponent(t.mail_subject) +
         '&body=' + encodeURIComponent(body);
