@@ -277,11 +277,12 @@
 
     /* ===== Footer note ===== */
     .footer-note {
-      position: relative; z-index: 1;
-      margin-top: 20px;
-      font-size: 0.78rem;
-      color: rgba(80,30,80,0.55);
+      margin-top: 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(100,30,100,0.65);
       text-align: center;
+      padding: 0 4px 8px;
     }
   </style>
 </head>
@@ -373,15 +374,26 @@
         />
       </div>
 
+      <div class="form-group">
+        <label for="allergy" data-i18n="label_allergy"></label>
+        <input
+          type="text"
+          id="allergy"
+          name="allergy"
+          data-i18n-placeholder="placeholder_allergy"
+          maxlength="200"
+        />
+      </div>
+
       <button type="submit" class="btn-confirm" id="submitBtn" data-i18n="btn_confirm"></button>
+
+      <p class="footer-note" data-i18n="footer_note"></p>
 
       <div id="successMsg" class="msg" data-i18n="msg_success"></div>
       <div id="errorMsg"   class="msg" data-i18n="msg_error"></div>
     </form>
   </div>
 </div>
-
-<p class="footer-note" data-i18n="footer_note"></p>
 
 <!-- ===== Confetti Script ===== -->
 <script>
@@ -466,6 +478,8 @@
       label_name:      "Your name ✏️",
       placeholder_name:"Enter your name",
       label_count:     "Number of guests (including yourself)",
+      label_allergy:   "Any food allergies? 🍰",
+      placeholder_allergy: "e.g. nuts, dairy, gluten — or leave blank if none",
       btn_confirm:     "🎉 I'm coming!",
       btn_sending:     "Sending…",
       btn_done:        "✅ Confirmed!",
@@ -473,7 +487,7 @@
       msg_error:       "Oops, something went wrong 😅 Please contact Emma's family directly!",
       footer_note:     "Please RSVP by 20 April — thank you! 💕",
       mail_subject:    "🎂 Emma's Birthday Party — RSVP",
-      mail_body:       "Name: {name}\nGuests: {count}\n\nI'm coming! 🎉"
+      mail_body:       "Name: {name}\nGuests: {count}\nAllergies: {allergy}\n\nI'm coming! 🎉"
     },
     sv: {
       page_title:      "Emmas Födelsedag 🎉",
@@ -488,6 +502,8 @@
       label_name:      "Ditt namn ✏️",
       placeholder_name:"Skriv ditt namn",
       label_count:     "Antal gäster (inklusive dig själv)",
+      label_allergy:   "Matallergier? 🍰",
+      placeholder_allergy: "T.ex. nötter, mejeriprodukter — lämna blankt om inga",
       btn_confirm:     "🎉 Jag kommer!",
       btn_sending:     "Skickar…",
       btn_done:        "✅ Bekräftat!",
@@ -495,29 +511,31 @@
       msg_error:       "Hoppsan, något gick fel 😅 Kontakta Emmas familj direkt!",
       footer_note:     "Vänligen svara senast 20 april — tack! 💕",
       mail_subject:    "🎂 Emmas Födelsedag — OSA",
-      mail_body:       "Namn: {name}\nAntal gäster: {count}\n\nJag kommer! 🎉"
+      mail_body:       "Namn: {name}\nAntal gäster: {count}\nAllergier: {allergy}\n\nJag kommer! 🎉"
     },
     zh: {
-      page_title:      "Emma 的生日派對 🎉",
-      hero_title:      " 的生日派對",
-      hero_sub:        "她要滿<span class='age'>9</span>歲啦！你被邀請啦！🥳🎉",
+      page_title:      "Emma 的生日派对 🎉",
+      hero_title:      " 的生日派对",
+      hero_sub:        "她要满<span class='age'>9</span>岁啦！你被邀请啦！🥳🎉",
       label_date:      "日期",
-      value_date:      "2026 年 4 月 26 日（星期日）",
-      label_time:      "時間",
+      value_date:      "2026 年 4 月 26 日（周日）",
+      label_time:      "时间",
       value_time:      "下午 1:00 – 3:00",
-      label_venue:     "地點",
-      rsvp_title:      "🎀 告訴我你來不來！",
+      label_venue:     "地点",
+      rsvp_title:      "🎀 你来吗？",
       label_name:      "你的名字 ✏️",
-      placeholder_name:"請填寫你的名字",
-      label_count:     "出席人數（包括自己）",
-      btn_confirm:     "🎉 確認出席！",
-      btn_sending:     "傳送中…",
-      btn_done:        "✅ 已確認！",
-      msg_success:     "太棒了！🎊 我們等你來！見到你會很開心！",
-      msg_error:       "哎呀，出了點問題 😅 請直接聯絡 Emma 的家人！",
-      footer_note:     "親愛的朋友，請在 4 月 20 日前回覆，謝謝 💕",
-      mail_subject:    "🎂 Emma 的生日派對 — 出席確認",
-      mail_body:       "姓名：{name}\n出席人數：{count}\n\n確認出席！🎉"
+      placeholder_name:"请填写你的名字",
+      label_count:     "出席人数（包括自己）",
+      label_allergy:   "有食物过敏吗？🍰",
+      placeholder_allergy: "例：坚果、乳制品、麦质 — 没有的话留空即可",
+      btn_confirm:     "🎉 确认出席！",
+      btn_sending:     "发送中…",
+      btn_done:        "✅ 已确认！",
+      msg_success:     "太棒了！🎊 我们等你来！见到你会很开心！",
+      msg_error:       "哎呀，出了点问题 😅 请直接联系 Emma 的家人！",
+      footer_note:     "亲爱的朋友，请在 4 月 20 日前回复，谢谢 💕",
+      mail_subject:    "🎂 Emma 的生日派对 — 出席确认",
+      mail_body:       "姓名：{name}\n出席人数：{count}\n食物过敏：{allergy}\n\n确认出席！🎉"
     }
   };
 
@@ -569,9 +587,10 @@
     const action = form.action;
 
     if (action.includes('YOUR_FORM_ID')) {
-      const name  = document.getElementById('guestName').value;
-      const count = document.getElementById('guestCount').value;
-      const body  = t.mail_body.replace('{name}', name).replace('{count}', count);
+      const name    = document.getElementById('guestName').value;
+      const count   = document.getElementById('guestCount').value;
+      const allergy = document.getElementById('allergy').value || '—';
+      const body    = t.mail_body.replace('{name}', name).replace('{count}', count).replace('{allergy}', allergy);
       window.location.href =
         'mailto:j22se@hotmail.com?subject=' + encodeURIComponent(t.mail_subject) +
         '&body=' + encodeURIComponent(body);
