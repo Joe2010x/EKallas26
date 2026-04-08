@@ -515,9 +515,11 @@
       label_allergy:   "Any food allergies? 🍰",
       placeholder_allergy: "e.g. nuts, dairy, gluten — or leave blank if none",
       btn_confirm:     "🎉 I'm coming!",
+      btn_decline:     "😢 Sorry, I can't make it",
       btn_sending:     "Sending…",
       btn_done:        "✅ Confirmed!",
       msg_success:     "Yay! 🎊 We can't wait to see you!",
+      msg_success_no:  "That's a shame 😢 Thanks for letting us know!",
       msg_error:       "Oops, something went wrong 😅 Please contact Emma's family directly!",
       footer_note:     "Please RSVP by 20 April — thank you! 💕",
       mail_subject:    "🎂 Emma's Birthday Party — RSVP",
@@ -543,9 +545,11 @@
       label_allergy:   "Matallergier? 🍰",
       placeholder_allergy: "T.ex. nötter, mejeriprodukter — lämna blankt om inga",
       btn_confirm:     "🎉 Jag kommer!",
+      btn_decline:     "😢 Tyvärr, jag kan inte komma",
       btn_sending:     "Skickar…",
       btn_done:        "✅ Bekräftat!",
       msg_success:     "Hurra! 🎊 Vi ser fram emot att träffa dig!",
+      msg_success_no:  "Vad synd 😢 Tack för att du meddelade oss!",
       msg_error:       "Hoppsan, något gick fel 😅 Kontakta Emmas familj direkt!",
       footer_note:     "Vänligen svara senast 20 april — tack! 💕",
       mail_subject:    "🎂 Emmas Födelsedag — OSA",
@@ -571,9 +575,11 @@
       label_allergy:   "有食物过敏吗？🍰",
       placeholder_allergy: "例：坚果、乳制品、麦质 — 没有的话留空即可",
       btn_confirm:     "🎉 确认出席！",
+      btn_decline:     "😢 抱歉，我不能参加",
       btn_sending:     "发送中…",
       btn_done:        "✅ 已确认！",
       msg_success:     "太棒了！🎊 我们等你来！见到你会很开心！",
+      msg_success_no:  "好可惜😢 谢谢你告诉我们！",
       msg_error:       "哎呀，出了点问题 😅 请直接联系 Emma 的家人！",
       footer_note:     "亲爱的朋友，请在 4 月 20 日前回复，谢谢 💕",
       mail_subject:    "🎂 Emma 的生日派对 — 出席确认",
@@ -611,12 +617,26 @@
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
+
+    // Sync submit button text with current attendance selection
+    const attendanceEl = document.getElementById('attendance');
+    if (attendanceEl) {
+      submitBtn.textContent = (attendanceEl.value === 'no') ? t.btn_decline : t.btn_confirm;
+    }
   }
 
   // Wire up buttons
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => applyLang(btn.dataset.lang));
   });
+
+  // Update submit button text when attendance changes
+  function updateSubmitBtn() {
+    const t = TRANSLATIONS[currentLang];
+    const val = document.getElementById('attendance').value;
+    submitBtn.textContent = (val === 'no') ? t.btn_decline : t.btn_confirm;
+  }
+  document.getElementById('attendance').addEventListener('change', updateSubmitBtn);
 
   // Init with default
   applyLang('en');
@@ -643,6 +663,8 @@
       window.location.href =
         'mailto:j22se@hotmail.com?subject=' + encodeURIComponent(t.mail_subject) +
         '&body=' + encodeURIComponent(body);
+      const attending = document.getElementById('attendance').value;
+      successMsg.innerHTML = (attending === 'no') ? t.msg_success_no : t.msg_success;
       successMsg.style.display = 'block';
       errorMsg.style.display   = 'none';
       submitBtn.disabled       = true;
@@ -664,6 +686,8 @@
       });
 
       if (res.ok) {
+        const attending = document.getElementById('attendance').value;
+        successMsg.innerHTML = (attending === 'no') ? t.msg_success_no : t.msg_success;
         successMsg.style.display = 'block';
         submitBtn.textContent    = t.btn_done;
         form.reset();
